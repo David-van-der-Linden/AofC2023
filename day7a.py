@@ -1,19 +1,16 @@
-import math
-import re
 from my_secrets import path
 from collections import Counter
 
 input_file = 'input7.txt'
 
 # compare hands
-# print('A'>='')
+# print('143'>='123')
 # if we map capital letters to lowercase letters we can use string comparison for which hand wins given there the same type
 cap_to_lower = {'A': 'z',
 				'K': 'y',
 				'Q': 'x',
 				'J': 'w',
 				'T': 'v'}
-# print('1234z'>='1234y')
 
 # idea parse all replace letters according to cap_to_lower
 # add a symbol at the start indicating which hand type it is and then apply a sorting algorithm to it
@@ -23,33 +20,12 @@ def determine_type(str):
 	# returns single character string between a and g 
 	# where g corresponds to the best hand type and a to the worst hand type
 	
-	# dictionary that counts how often a character occurs in a string
-	temp_dict = {}
-	for car in str:
-		# print(car)
-		if car in temp_dict:
-			temp_dict[car] += 1
-		else:
-			temp_dict[car] = 1
-	
-	# print(temp_dict)
-
-    # a_key will be the character that occurs the most and b_key the character that occurs the second most,
-    # a_val and b_val will be temp_dict[a_key] and temp_dict[b_key] respectively.
-	a_val = 0
-	b_val = 0
-	a_key = 'none'
-	b_key = 'none'
-	
-	for key in temp_dict:
-		if temp_dict[key] >= a_val:
-			b_val = a_val
-			b_key = a_key
-			a_val = temp_dict[key]
-			a_key = key
-		elif temp_dict[key] > b_val:
-			b_val = temp_dict[key]
-			b_key = key
+    # a_val is how often the most occurring character occurs
+	# Counter(str) is dictionary that counts how often a character occurs in a string
+	a_val = max(Counter(str).values())
+	# b_val is how often the second most occurring character occurs
+	if a_val != 5:
+		b_val = sorted(Counter(str).values())[-2]
 
 	# logic for determining which hand type we have
 	if a_val == 5:
