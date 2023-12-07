@@ -18,9 +18,12 @@ cap_to_lower = {'A': 'z',
 # add a symbol at the start indicating which hand type it is and then apply a sorting algorithm to it
 
 def determin_type(str):
+	# input str is a string of lenght 5 
+	# returns single carater string between a and g 
+	# where g corrsponds to the best hand type and a to the worst hand type
+	
+	# dictonary that counts how often a character occurs in a string
 	temp_dict = {}
-	# print(str)
-
 	for car in str:
 		# print(car)
 		if car in temp_dict:
@@ -52,7 +55,7 @@ def determin_type(str):
 
 	# print(akey)
 
-
+	# logic for determing which hand we have
 	if maxa + jokers == 5:
 		#type 5 of a kind
 		return 'g'

@@ -4,7 +4,6 @@ from my_secrets import path
 
 input_file = 'input7.txt'
 
-
 # compare hands
 # print('A'>='')
 # if we map capetal leters to lowercase letters we can use string comparison for which hand wins given there the same type
@@ -19,9 +18,12 @@ cap_to_lower = {'A': 'z',
 # add a symbol at the start indicating which hand type it is and then apply a sorting algorithm to it
 
 def determin_type(str):
+	# input str is a string of lenght 5 
+	# returns single carater string between a and g 
+	# where g corrsponds to the best hand type and a to the worst hand type
+	
+	# dictonary that counts how often a character occurs in a string
 	temp_dict = {}
-	# print(str)
-
 	for car in str:
 		# print(car)
 		if car in temp_dict:
@@ -50,7 +52,7 @@ def determin_type(str):
 
 	# print(akey)
 
-
+	# logic for determing which hand we have
 	if maxa == 5:
 		#type 5 of a kind
 		return 'g'
@@ -95,14 +97,8 @@ for line in fileinput.input([path + 'prosessed_' + input_file], inplace=True):
 with open(path + 'prosessed_' + input_file) as f:
     lines = f.read().split('\n')
 
-print('pre sort')
-for line in lines:
-	print(line)
-
 lines.sort()
 
-print()
-print('post sort')
 ans = 0
 for count, line in enumerate(lines):
 	rank = count + 1
