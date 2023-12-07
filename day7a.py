@@ -50,27 +50,18 @@ def determine_type(str):
 		# type high card
 		return 'a'
 
+with open(path + input_file) as f:
+    file = f.read()
+	
+	# replace high cards to match string comparison
+    for key in cap_to_lower:
+        file = file.replace(key, cap_to_lower[key])
+	
+    lines = file.split('\n')
 
-# --------------- replacing AKQJT ----------------------
-# Read in the file
-with open(path + input_file) as file:
-  filedata = file.read()
-# Replace the target string
-for key in cap_to_lower:
-	filedata = filedata.replace(key, cap_to_lower[key])
-# Write the file out again
-with open(path + 'processed_' + input_file, 'w') as file:
-  file.write(filedata)
-
-# ------------------ adding the symbol at the start of the line ---------
-import fileinput
-import sys
-
-for line in fileinput.input([path + 'processed_' + input_file], inplace=True):
-    sys.stdout.write('{t}{l}'.format(l=line, t=determine_type(line.split()[0])))
-
-with open(path + 'processed_' + input_file) as f:
-    lines = f.read().split('\n')
+# add hand type symbol at start
+for i in range(len(lines)):
+    lines[i] = determine_type(lines[i].split()[0]) + lines[i]
 
 lines.sort()
 
