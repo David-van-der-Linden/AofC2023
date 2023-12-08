@@ -17,19 +17,17 @@ for line_index in range(len(lines)):
     def my_def():
         split_line = line.split(':')[1]
         draws = split_line.split(';')
-        # print(draws)
         for draw in draws:
             split_draw = draw.split(',')
-            # print('split_draw:', split_draw)
             for ball in split_draw:
                 split_ball = ball.split(' ')
-                # print('split_ball', split_ball)
                 nr = int(split_ball[1])
                 color = split_ball[2]
+                # update my_dict to have the maximum occurring color
                 if nr > my_dict[color]:
                     my_dict[color] = nr
         
-        print('my_dict', my_dict)
+        # compute power
         power = 1
         for color in my_dict:
             power = power * my_dict[color]
