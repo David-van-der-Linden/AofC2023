@@ -20,8 +20,6 @@ for line_index in range(len(lines)):
         row_s = line_index
         break
 
-# let us start one to the right
-
 get_ends = {'|': [[-1,0],[1, 0]],
             '-': [[0,-1],[0,1]],
             'L': [[-1,0],[0,1]],
@@ -34,7 +32,6 @@ def get_next(row_l : int, col_l : int, row_c : int, col_c : int, symbol : str):
     # or raises error
     last = np.array([row_l, col_l])
     current = np.array([row_c, col_c])
-
 
     # idea
     # for symbol get relative positions and check which one already occupied
@@ -49,7 +46,7 @@ def get_next(row_l : int, col_l : int, row_c : int, col_c : int, symbol : str):
         raise 'ends not match current and last'
 
 # from looking at the puzzle input we deduced that the start node should be a '-'
-
+# let us chose to start on the right of S and end on the left of S
 row_l = row_s
 col_l = col_s
 row_c = row_s
