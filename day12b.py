@@ -1,5 +1,5 @@
 from my_secrets import path
-import re
+from tqdm import tqdm
 
 with open(path + 'input12.txt') as f:
     lines = f.read().split('\n')
@@ -90,7 +90,7 @@ def nr_of_ways(ssl : str, seq : list):
         assert False 
 
 ans = 0
-for line in lines:
+for line in tqdm(lines):
     split_line = line.split()
     temp_str = split_line[0]
     ssl = f'{temp_str}?{temp_str}?{temp_str}?{temp_str}?{temp_str}'
@@ -105,6 +105,7 @@ for line in lines:
     ans += ways
 
     print('ways', ways)
+    print('ans', ans)
 
 print('ans:', ans)
 
