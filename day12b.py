@@ -1,73 +1,101 @@
-from os import remove
-import re
-import numpy as np
 from my_secrets import path
+import re
 
-with open(path + 'test12.txt') as f:
+with open(path + 'input12.txt') as f:
     lines = f.read().split('\n')
 
-# idea brute force all possible combinations and count the ones that work
-# needed:
-# 1. A way to convert string of .'s and #'s to the corresponding sequence of numbers
-# 2. A way of turning string of .'s, #'s, and ?'s into all possible strings
-# where ?'s are replaced by .'s and #'s
-# 3. A way of counting all the correct strings
+# idea go from right to left
+# using cups and balls
+# on every iteration iteration add a ball
+# or remove a cup
+# if there are no balls left then there is only one way
+# if there are no cups then there are 0 ways
+# implement this recursively to find the number of ways
 
-# ideas for speeding up
-# discard strings that have to many #
+# lets say we have a sequence
+# seq = [1,2,3]
+# then the shortest string matching it would be
+# sorest_str[seq] = '#.##.###'
+# len(sorest_str[seq]) = sum(seq) + len(seq) - 1
+#                      = 6 + 3 - 1 = 8
+# if our string of spring labels is
+# ssl = '????????',     len(ssl) = 8
+# then there is only one way for this seq ssl pair to match
+# ssl = '?????????',    len(ssl) = 9
+# then balls = len(ssl) - len(sorest_str[seq]) = 1
+# this is how much leeway we have this leeway can be inserted
+# into the shortest sting in one of the following ways
+# '.#.##.###', '#..##.###', '#.##..###', '#.##.###.'
+# we can look at it if there where cups _ in the shortest sting
+# '_#._##._###_' and we can place the balls in the cups
 
-# 1
-def compute_seq(input_str : str):
-    # returns sequence in list form '#.#.###' -> [1, 1, 3]
-    # the size of each contiguous group of damaged springs 
-    # is listed in the order those groups appear in the row
-    return [len(str) for str in re.findall('#+', input_str)]
+# we can assume without loss of generality (lel i mean implement a parser)
+# that all strings of spring labels (ssls) have no . at the start 
+# since nr_of_ways(ssl,seq) = nr_of_ways('.'+ssl, seq) for all ssl and seq
+# and no consecutive .s since they could be replaced by a single .
 
-# 2
-def get_all_str(input_list : list, max_hash : int):
-    # input list of string containing ?'s
-    # returns list of strings not containing ?'s
+def is_feasible(str_with_q, str_without_q):
+    # example
+    # is_feasible('#.?..#', '#....#') -> True
+    # is_feasible('#.?..#', '#...##') -> False
+    if len(str_with_q) != len(str_without_q):
+        return False
+    for i in range(len(str_with_q)):
+        char = str_with_q[i]
+        if char == '?':
+            continue
+        elif char != str_without_q[i]:
+            return False
+    return True
 
-    to_return = []
-    for str in input_list:
-        question_index = str.find('?')
-        # if no hit
-        if question_index == -1:
-            # then schedule this string for return
-            to_return.append(str)
+def nr_of_ways(ssl : str, seq : list):
+    if ssl == '':
+        return 1 if seq == [] else 0
+    elif ssl[0] == '.':
+        return nr_of_ways(ssl[1:], seq)
+    elif ssl[0] == '?':
+        # return nr_of_ways if add ball + nr_of_ways if remove cup
+        return nr_of_ways(ssl[1:], seq) + nr_of_ways('#' + ssl[1:], seq)
+    elif ssl[0] == '#':
+        if seq == []:
+            return 0
         else:
-            # replace one character at the time and iterate
-            for str_2 in get_all_str([str[:question_index]+'.'+str[(question_index+1):]], max_hash):
-                to_return.append(str_2)
-            for str_3 in get_all_str([str[:question_index]+'#'+str[(question_index+1):]], max_hash):
-                to_return.append(str_3)
+            # check if the first part is feasible
+            # then continue with shortened sequence
+            if (len(ssl) >= seq[0]+1
+                and not is_feasible(ssl[:seq[0]+1],'#'*seq[0]+'.')):
+                return 0
+            elif (len(ssl) == seq[0]
+                and not is_feasible(ssl[:seq[0]+1],'#'*seq[0])):
+                return 0
+            elif len(ssl) < seq[0]:
+                return 0
+            else:
+                return nr_of_ways(ssl[seq[0]+1:],seq[1:])
+    else:
+        assert False 
+
+# ans = 0
+# for line in lines:
+#     split_line = line.split()
+#     temp_str = split_line[0]
+#     ssl = f'{temp_str}?{temp_str}?{temp_str}?{temp_str}?{temp_str}'
+#     temp_seq = [int(val) for val in split_line[1].split(',')]
+#     seq = temp_seq + temp_seq + temp_seq + temp_seq + temp_seq
     
-    # print('to_return_pre', to_return)
-    to_return = [str for str in to_return if sum(compute_seq(str)) <= max_hash]
-    # print('to_return_post', to_return)
-    return to_return
+#     print('line', line)
+#     print('ssl', ssl)
+#     print('seq', seq)
+    
+#     ways = nr_of_ways(ssl,seq)
+#     ans += ways
 
-# 3
-ans = 0
-for line in lines:
-    split_line = line.split()
-    temp_str = split_line[0]
-    input_str = temp_str + '?' + temp_str + '?' + temp_str + '?' + temp_str + '?' + temp_str 
-    temp_seq = [int(val) for val in split_line[1].split(',')]
-    desired_seq = temp_seq + temp_seq + temp_seq + temp_seq + temp_seq
+#     print('ways', ways)
 
-    print()
-    print('input_str', input_str)
-    print('desired_seq', desired_seq)
-    ways = 0
-    max_hash = sum(desired_seq)
-    print('max_hash', max_hash)
-    for str in get_all_str(input_list=[input_str], max_hash=max_hash):
-        # print('str:', str)
-        # print(compute_seq(str))
-        if compute_seq(str) == desired_seq:
-            ways += 1
-    print('ways:', ways)
-    ans += ways
+# print('ans:', ans)
 
-print('ans:', ans)
+# 322650 is to low
+print(nr_of_ways('???????#??????##.?'*2+'???????#??????##.', [1,3,2,1,2,1,3,2,1,2,1,3,2,1,2]))
+# line ???????#??????##. 1,3,2,1,2
+# ssl = '???????#??????##.????????#??????##.????????#??????##.????????#??????##.????????#??????##.'
+# seq = [1, 3, 2, 1, 2, 1, 3, 2, 1, 2, 1, 3, 2, 1, 2, 1, 3, 2, 1, 2, 1, 3, 2, 1, 2]
