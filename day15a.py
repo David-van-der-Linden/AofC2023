@@ -7,7 +7,7 @@ def get_hash(step):
     current_value = 0
     for char in step:
         current_value += ord(char)
-        current_value = current_value*17
+        current_value = current_value * 17
         current_value = current_value % 256
     return current_value
 
