@@ -29,13 +29,10 @@
 import re
 import numpy as np
 from my_secrets import path
-import sys
-sys.setrecursionlimit(1500000000)
 
 
 with open(path + 'input10.txt') as f:
     lines = f.read().split('\n')
-
 
 for line_index in range(len(lines)):
     line = lines[line_index]
@@ -121,33 +118,31 @@ class board():
     def __init__(self, grid):
         self.grid = grid
         
-    def color_this_and_touching(self, location: tuple[int], symbol: str):
-        self.grid[location[0]][location[1]] = symbol
-        self.check_neighbors(location, symbol)
+    def color_this_and_touching(self, initial_loc: tuple[int], symbol: str):
+        queue = [initial_loc]
+        visited = [[False for _ in range(len(self.grid[0]))] for _ in range(len(self.grid))]
+        while len(queue) > 0:
+            loc = queue.pop(0)
+            self.grid[loc[0]][loc[1]] = symbol
+            for dir in directions:
+                new_loc = (loc[0] + dir[0], loc[1] + dir[1])
+                if (0 <= new_loc[0] < len(self.grid[0])) \
+                    and (0 <= new_loc[1] < len(self.grid)) \
+                    and not visited[new_loc[0]][new_loc[1]] \
+                    and self.grid[new_loc[0]][new_loc[1]] == '.':
+                    queue.append(new_loc)
+                    visited[new_loc[0]][new_loc[1]] = True
 
-    def check_neighbors(self, location, symbol):
-        for dir in directions:
-            new_location = (location[0] + dir[0], location[1] + dir[1])
-            if (0 <= new_location[0] < len(self.grid[0])) \
-                    and (0 <= new_location[1] < len(self.grid)) \
-                    and self.grid[new_location[0]][new_location[1]] == '.':
-                self.color_this_and_touching(new_location, symbol)
-
-    def get_num_odd_I_grid(self):
+    def get_num_odd_sym_in_grid(self, symbol : str):
         num = 0
         for i in range(1, len(self.grid), 2):
             for j in range(1, len(self.grid[0]), 2):
-                if self.grid[i][j] == 'I':
+                if self.grid[i][j] == symbol:
                     num += 1
         return num
 
 vis_grid(big_grid, path + 'big_grid_pre_color.txt')
-# manually looking at big_grid_pre_color.txt found that the following coordinates are inside the loop
-first_in_row = 16
-first_in_col = len('.................................................................#')
 my_object = board(big_grid)
-# my_object.color_this_and_touching((0, 0), 'O') # doesn't work (maybe due to Catastrophic Backtracking)
-my_object.color_this_and_touching((first_in_row, first_in_col), 'I')
+my_object.color_this_and_touching((0, 0), 'O')
 vis_grid(my_object.grid, path + 'big_grid_vised.txt')
-print('ans:', my_object.get_num_odd_I_grid())
-print('done')
+print('ans:', my_object.get_num_odd_sym_in_grid('.'))
