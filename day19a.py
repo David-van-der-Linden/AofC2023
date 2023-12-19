@@ -77,8 +77,6 @@ def check_part(part):
 global workflows
 workflows = {'A' : workflow_cl_A(), 'R' : workflow_cl_R()}
 
-
-
 for line in workflow_lines:
     key = line.split('{')[0]
     rules = line.split('{')[1][:-1].split(',')
