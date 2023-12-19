@@ -18,7 +18,7 @@ for line_index in range(len(lines)):
     for nr in nrs_on_card:
         if nr in winning_nrs:
             nr_of_matches += 1
-    
+
     if nr_of_matches > 0:
         for i in range(line_index + 1, line_index + nr_of_matches+1):
             amount_of_card[i] += amount_of_card[line_index]

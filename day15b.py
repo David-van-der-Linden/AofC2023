@@ -10,6 +10,7 @@ with open(path + 'input15.txt') as f:
 # in each box store the labels and the focal_length of
 # the lenses in the form of an ordered dictionary
 
+
 def get_hash(step):
     current_value = 0
     for char in step:
@@ -17,6 +18,7 @@ def get_hash(step):
         current_value = current_value * 17
         current_value = current_value % 256
     return current_value
+
 
 boxes = {}
 
@@ -38,6 +40,8 @@ for step in steps:
 ans = 0
 for box_nr in boxes:
     for label in boxes[box_nr]:
-        ans += (box_nr + 1) * (list(boxes[box_nr].keys()).index(label) + 1) * boxes[box_nr][label]
+        ans += (box_nr + 1) * \
+            (list(boxes[box_nr].keys()).index(label) + 1) * \
+            boxes[box_nr][label]
 
 print(ans)

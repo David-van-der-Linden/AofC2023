@@ -7,14 +7,15 @@ with open(path + 'input19.txt') as f:
 workflow_lines = blocks[0].split('\n')
 part_lines = blocks[1].split('\n')
 
+
 class workflow_cl():
-    def __init__(self, line : str, key : str, rules : list[str]):
+    def __init__(self, line: str, key: str, rules: list[str]):
         self.line = line
         self.key = key
         self.rules = list()
         for rule in rules:
             self.rules.append(rule_cl(rule))
-    
+
     def check_part(self, part):
         for rule in self.rules:
             out = rule.check_part(part)
@@ -28,21 +29,24 @@ class workflow_cl():
                 return workflows[out].check_part(part)
         assert False
 
+
 class workflow_cl_A():
     def check_part(self, part):
         return 'A'
 
+
 class workflow_cl_R():
     def check_part(self, part):
         return 'R'
+
 
 class rule_cl():
     def __init__(self, rule):
         self.rule_str = rule
         self.colon_split = rule.split(':')
         self.all_split = re.split('>|<|:', rule)
-    
-    def check_part(self, part : dict):
+
+    def check_part(self, part: dict):
         if len(self.colon_split) == 1:
             return workflows[self.rule_str].check_part(part)
         else:
@@ -62,6 +66,7 @@ class rule_cl():
                 print(self.rule_str)
                 assert False
 
+
 def check_part(part):
     out = workflows['in'].check_part(part)
     # if its a good part reject
@@ -74,8 +79,9 @@ def check_part(part):
         print('out', out)
         assert False
 
+
 global workflows
-workflows = {'A' : workflow_cl_A(), 'R' : workflow_cl_R()}
+workflows = {'A': workflow_cl_A(), 'R': workflow_cl_R()}
 
 for line in workflow_lines:
     key = line.split('{')[0]
@@ -88,7 +94,7 @@ for part_line in part_lines:
     components = part_line.split(',')
     part = dict()
     for component in components:
-        part[component[0]]=int(component[2:])
+        part[component[0]] = int(component[2:])
 
     if check_part(part):
         for key in part:

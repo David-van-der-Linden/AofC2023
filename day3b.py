@@ -15,16 +15,17 @@ for line_index in range(len(lines)):
         match_done = False
         if not match_done:
             # horizontal box starts at x_start and ends at x_end
-            x_start = max(0,match.start()-1)
-            x_end = min(match.end(),len(line)-1)
+            x_start = max(0, match.start()-1)
+            x_end = min(match.end(), len(line)-1)
             for j in range(x_start, x_end+1):
                 if not match_done:
                     # vertical box starts at y_start and ends at y_end
-                    y_start = max(0,line_index-1)
-                    y_end = min(line_index+1,len(lines)-1)
-                    for i in range(y_start,y_end+1):
+                    y_start = max(0, line_index-1)
+                    y_end = min(line_index+1, len(lines)-1)
+                    for i in range(y_start, y_end+1):
                         if lines[i][j] in '*':
-                            my_dict.setdefault((i,j),[]).append(match.group())
+                            my_dict.setdefault(
+                                (i, j), []).append(match.group())
                             match_done = True
                             break
 

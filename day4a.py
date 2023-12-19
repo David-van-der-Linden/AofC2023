@@ -15,7 +15,7 @@ for line in lines:
     for nr in nrs_on_card:
         if nr in winning_nrs:
             nr_of_matches += 1
-    
+
     if nr_of_matches > 0:
         ans = ans + 2 ** (nr_of_matches-1)
 print(ans)

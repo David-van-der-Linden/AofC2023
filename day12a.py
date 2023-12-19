@@ -13,14 +13,18 @@ with open(path + 'input12.txt') as f:
 # 3. A way of counting all the correct strings
 
 # 1
-def compute_seq(input_str : str):
+
+
+def compute_seq(input_str: str):
     # returns sequence in list form '#.#.###' -> [1, 1, 3]
-    # the size of each contiguous group of damaged springs 
+    # the size of each contiguous group of damaged springs
     # is listed in the order those groups appear in the row
     return [len(str) for str in re.findall('#+', input_str)]
 
 # 2
-def get_all_str(input_list : list):
+
+
+def get_all_str(input_list: list):
     # input list of string containing ?'s
     # returns list of strings not containing ?'s
 
@@ -39,13 +43,14 @@ def get_all_str(input_list : list):
                 to_return.append(str_3)
     return to_return
 
+
 # 3
 ans = 0
 for line in lines:
     split_line = line.split()
     input_str = split_line[0]
     desired_seq = [int(val) for val in split_line[1].split(',')]
-    
+
     ways = 0
     for str in get_all_str(input_list=[input_str]):
         if compute_seq(str) == desired_seq:

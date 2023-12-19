@@ -3,7 +3,8 @@ from my_secrets import path
 with open(path + 'input9.txt') as f:
     lines = f.read().split('\n')
 
-def get_diff(line : list):
+
+def get_diff(line: list):
     difference_row = []
     for value_index in range(1, len(line)):
         difference_row.append(line[value_index]-line[value_index - 1])
@@ -11,6 +12,7 @@ def get_diff(line : list):
 
 # idea carry out the steps like described in the question
 # only store the last element of a difference row (since the rest is not needed for finding answer)
+
 
 ans = 0
 for line in lines:

@@ -20,14 +20,15 @@ for line_index in range(len(lines)):
         row_s = line_index
         break
 
-get_ends = {'|': [[-1,0],[1, 0]],
-            '-': [[0,-1],[0,1]],
-            'L': [[-1,0],[0,1]],
-            'J': [[0,-1],[-1,0]],
-            '7': [[0,-1],[1,0]],
-            'F': [[1,0],[0,1]]}
+get_ends = {'|': [[-1, 0], [1, 0]],
+            '-': [[0, -1], [0, 1]],
+            'L': [[-1, 0], [0, 1]],
+            'J': [[0, -1], [-1, 0]],
+            '7': [[0, -1], [1, 0]],
+            'F': [[1, 0], [0, 1]]}
 
-def get_next(row_l : int, col_l : int, row_c : int, col_c : int, symbol : str):
+
+def get_next(row_l: int, col_l: int, row_c: int, col_c: int, symbol: str):
     # reruns coordinates of the next symbol along the path
     # or raises error
     last = np.array([row_l, col_l])
@@ -45,6 +46,7 @@ def get_next(row_l : int, col_l : int, row_c : int, col_c : int, symbol : str):
     else:
         raise 'ends not match current and last'
 
+
 # from looking at the puzzle input we deduced that the start node should be a '-'
 # let us chose to start on the right of S and end on the left of S
 row_l = row_s
@@ -54,7 +56,7 @@ col_c = col_s + 1
 
 steps = 1
 while (row_c, col_c) != (row_s, col_s - 1):   # input
-# while (row_c, col_c) != (row_s + 1, col_s):     # test_input
+    # while (row_c, col_c) != (row_s + 1, col_s):     # test_input
     row_n, col_n = get_next(row_l, col_l, row_c, col_c, lines[row_c][col_c])
     row_l, col_l, row_c, col_c = row_c, col_c, row_n, col_n
     steps += 1
