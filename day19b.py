@@ -1,5 +1,6 @@
 import re
 from my_secrets import path
+from tqdm import tqdm
 
 with open(path + 'input19.txt') as f:
     blocks = f.read().split('\n\n')
@@ -51,26 +52,27 @@ class rule_cl():
         self.rule_str = rule
         self.colon_split = rule.split(':')
         self.all_split = re.split('>|<|:', rule)
+        self.colon_split_is_one = True if len(self.colon_split) == 1 else False
+        self.greater = True if re.search(">", self.rule_str) else False
+        self.less = True if re.search("<", self.rule_str) else False
+        if not self.colon_split_is_one:
+            self.component = self.all_split[0]
+            self.number = int(self.all_split[1])
+            self.next_workflow = self.all_split[2]
 
     def check_part(self, part: dict):
-        if len(self.colon_split) == 1:
+        if self.colon_split_is_one:
             return workflows[self.rule_str].check_part(part)
-        else:
-            greater = re.search(">", self.rule_str)
-            less = re.search("<", self.rule_str)
-            if greater:
-                if part[self.all_split[0]] > int(self.all_split[1]):
-                    return workflows[self.all_split[2]].check_part(part)
-                else:
-                    return 'go_next'
-            elif less:
-                if part[self.all_split[0]] < int(self.all_split[1]):
-                    return workflows[self.all_split[2]].check_part(part)
-                else:
-                    return 'go_next'
+        elif self.greater:
+            if part[self.component] > self.number:
+                return workflows[self.next_workflow].check_part(part)
             else:
-                print(self.rule_str)
-                assert False
+                return 'go_next'
+        else:
+            if part[self.component] < self.number:
+                return workflows[self.next_workflow].check_part(part)
+            else:
+                return 'go_next'
 
 
 def check_part(part):
@@ -108,17 +110,19 @@ for line in workflow_lines:
         zero_or_one = 0 if symbol == '<' else 1
         cutoffs[component].add(number + zero_or_one)
 
+
 x_cutoffs = sorted(cutoffs['x'])
 m_cutoffs = sorted(cutoffs['m'])
 a_cutoffs = sorted(cutoffs['a'])
 s_cutoffs = sorted(cutoffs['s'])
-
+print(len(x_cutoffs))
+print(len(m_cutoffs))
 
 ans = 0
-print('in about 20 hours you will know the answer')
+print('in about 5 hours you will know the answer')
 # :-1 is there since we do not want to do 4001
 for index_x, x in enumerate(x_cutoffs[:-1]):
-    for index_m, m in enumerate(m_cutoffs[:-1]):
+    for index_m, m in tqdm(enumerate(m_cutoffs[:-1])):
         for index_a, a in enumerate(a_cutoffs[:-1]):
             for index_s, s in enumerate(s_cutoffs[:-1]):
                 if check_part({'x': x, 'm': m, 'a': a, 's': s}):
