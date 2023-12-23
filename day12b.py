@@ -37,6 +37,9 @@ with open(path + 'input12.txt') as f:
 # whenever we have a ssl that is leading with an # we can truncate since we know that
 # the first # is part of the first element of seq
 
+# add a lookup table to store all things once you have computed them to avoid
+# calculating the number of ways of some input twice
+
 
 def is_feasible(str_with_q, str_without_q):
     # example
@@ -53,45 +56,54 @@ def is_feasible(str_with_q, str_without_q):
     return True
 
 
-def seq_to_min_ssl(seq: list):
+def seq_to_min_ssl(seq: tuple):
     ssl = ''
     for i in seq:
         ssl = ssl + '#'*i + '.'
     return ssl[:-1]
 
 
-def nr_of_ways(ssl: str, seq: list):
-    if ssl == '':
-        return 1 if seq == [] else 0
-    # if len(seq_to_min_ssl(seq)) > len(ssl):
-    elif sum(seq) + len(seq) - 1 > len(ssl):
-        return 0
-    elif sum(seq) + len(seq) - 1 == len(ssl):
-        return 1 if is_feasible(ssl, seq_to_min_ssl(seq)) else 0
+def nr_of_ways(ssl: str, seq: tuple):
+    if (ssl, seq) in lookup:
+        return lookup[(ssl, seq)]
+    elif ssl == '':
+        lookup[(ssl, seq)] = 1 if len(seq) == 0 else 0
+        return lookup[(ssl, seq)]
     elif ssl[0] == '.':
-        return nr_of_ways(ssl[1:], seq)
+        lookup[(ssl, seq)] = nr_of_ways(ssl[1:], seq)
+        return lookup[(ssl, seq)]
     elif ssl[0] == '?':
         # return nr_of_ways if add ball + nr_of_ways if remove cup
-        return nr_of_ways(ssl[1:], seq) + nr_of_ways('#' + ssl[1:], seq)
+        lookup[(ssl, seq)] = nr_of_ways(ssl[1:], seq) +\
+            nr_of_ways('#' + ssl[1:], seq)
+        return lookup[(ssl, seq)]
     elif ssl[0] == '#':
-        if seq == []:
+        if len(seq) == 0:
+            lookup[(ssl, seq)] = 0
             return 0
         else:
             # check if the first part is feasible
             # then continue with shortened sequence
             if (len(ssl) >= seq[0]+1
                     and not is_feasible(ssl[:seq[0]+1], '#'*seq[0]+'.')):
+                lookup[(ssl, seq)] = 0
                 return 0
             elif (len(ssl) == seq[0]
                   and not is_feasible(ssl[:seq[0]+1], '#'*seq[0])):
+                lookup[(ssl, seq)] = 0
                 return 0
             elif len(ssl) < seq[0]:
+                lookup[(ssl, seq)] = 0
                 return 0
             else:
-                return nr_of_ways(ssl[seq[0]+1:], seq[1:])
+                lookup[(ssl, seq)] = nr_of_ways(ssl[seq[0]+1:], seq[1:])
+                return lookup[(ssl, seq)]
     else:
         assert False
 
+
+global lookup
+lookup = dict()
 
 ans = 0
 for line in tqdm(lines):
@@ -101,23 +113,7 @@ for line in tqdm(lines):
     temp_seq = [int(val) for val in split_line[1].split(',')]
     seq = temp_seq + temp_seq + temp_seq + temp_seq + temp_seq
 
-    print('line', line)
-    print('ssl', ssl)
-    print('seq', seq)
-
-    ways = nr_of_ways(ssl, seq)
+    ways = nr_of_ways(ssl, tuple(seq))
     ans += ways
 
-    print('ways', ways)
-    print('ans', ans)
-
 print('ans:', ans)
-
-# 322650 is to low
-# print(nr_of_ways('???????#??????##.?'*2+'???????#??????##.', [1,3,2,1,2,1,3,2,1,2,1,3,2,1,2]))
-# print(nr_of_ways('???????#??????##.????????#??????##.????????#??????##.????????#??????##.????????#??????##.',
-#                  [1, 3, 2, 1, 2, 1, 3, 2, 1, 2, 1, 3, 2, 1, 2, 1, 3, 2, 1, 2, 1, 3, 2, 1, 2]))
-
-# line ???????#??????##. 1,3,2,1,2
-# ssl = '???????#??????##.????????#??????##.????????#??????##.????????#??????##.????????#??????##.'
-# seq = [1, 3, 2, 1, 2, 1, 3, 2, 1, 2, 1, 3, 2, 1, 2, 1, 3, 2, 1, 2, 1, 3, 2, 1, 2]
