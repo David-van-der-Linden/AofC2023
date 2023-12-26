@@ -1,6 +1,13 @@
 from my_secrets import path
 import networkx as nx
 
+# idea create a digraph with nodes as states where we store
+# location i,j and direction d and straightness 1 2 or 3
+# connect edges according to exercise with weights
+# connect a start end end node to all the possible start and end states
+# using edges of weight 1 for the first move and weight zero for the end states
+# apply a shortest path algorithm
+
 
 directions = {'R', 'L', 'U', 'D'}
 
@@ -39,7 +46,8 @@ if __name__ == '__main__':
                         new_j = old_j+dir_to_cords[new_d][1]
                         if ij_in_range(new_i, new_j):
                             g.add_edge(f'{old_i},{old_j},{old_d}{straightness}',
-                                       f'{new_i},{new_j},{new_d}{1}', weight=int(lines[new_i][new_j]))
+                                       f'{new_i},{new_j},{new_d}{1}',
+                                       weight=int(lines[new_i][new_j]))
                 # keeping directions
                 new_d = old_d
                 new_i = old_i+dir_to_cords[new_d][0]
@@ -47,7 +55,8 @@ if __name__ == '__main__':
                 if ij_in_range(new_i, new_j):
                     for straightness in range(1, max_straight):
                         g.add_edge(f'{old_i},{old_j},{old_d}{straightness}',
-                                   f'{new_i},{new_j},{new_d}{straightness+1}', weight=int(lines[new_i][new_j]))
+                                   f'{new_i},{new_j},{new_d}{straightness+1}',
+                                   weight=int(lines[new_i][new_j]))
 
     # since there are multiple end states lets add a end vertex
     # and costless edges to reach it from the other end states
@@ -55,7 +64,7 @@ if __name__ == '__main__':
     j = len(lines[0])-1
     for d in ['D', 'R']:
         for straightness in range(1, max_straight+1):
-            g.add_edge(f'{i},{j},{new_d}{straightness}', 'end', weight=0)
+            g.add_edge(f'{i},{j},{d}{straightness}', 'end', weight=0)
 
     # we also need to add a starting node with straightness zero
     g.add_edge('start', f'{0},{1},R{1}', weight=int(lines[0][1]))
@@ -67,7 +76,3 @@ if __name__ == '__main__':
         g, source='start', target='end', weight='weight')
     print(shortest_path)
     print('ans', shortest_path_length)
-
-    # 1113 was to high
-    # rerunning spits out different answer for some reason without changing the code
-    # and sometimes it even says there is no path between nodes start and end
