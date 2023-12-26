@@ -31,11 +31,11 @@ g.add_edge('0,1', '1,1', weight=1)
 
 def replace_vertex_w_edge(vertex):
     assert g.degree(vertex) == 2
-    lst = list(g.neighbors(vertex))
-    w0 = g[lst[0]][vertex]['weight']
-    w1 = g[lst[1]][vertex]['weight']
+    neighbors = list(g.neighbors(vertex))
+    w0 = g[neighbors[0]][vertex]['weight']
+    w1 = g[neighbors[1]][vertex]['weight']
     g.remove_node(vertex)
-    g.add_edge(lst[0], lst[1], weight=w0+w1)
+    g.add_edge(neighbors[0], neighbors[1], weight=w0+w1)
 
 
 def condense_graph():
