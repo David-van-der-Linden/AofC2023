@@ -79,7 +79,6 @@ if __name__ == '__main__':
 
     shortest_path = nx.shortest_path(
         g, source='start', target='end', weight='weight')
-    shortest_path_length = nx.shortest_path_length(
-        g, source='start', target='end', weight='weight')
+    shortest_path_length = nx.path_weight(g, shortest_path, weight="weight")
     print(shortest_path)
     print('ans', shortest_path_length)
