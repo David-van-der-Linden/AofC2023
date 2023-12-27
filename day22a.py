@@ -15,8 +15,8 @@ class SandStack():
     def __init__(self, lines):
         self.lines = lines
         self.bricks = list()
-        for brick_index, line in enumerate(lines):
-            self.bricks.append(Brick(line, brick_index))
+        for line_index, line in enumerate(lines):
+            self.bricks.append(Brick(line, line_index))
 
         max_x = max(self.bricks, key=lambda x: x.x_high).x_high
         max_y = max(self.bricks, key=lambda x: x.y_high).y_high
@@ -49,10 +49,10 @@ class SandStack():
             for x in range(brick.x_low, brick.x_high + 1):
                 for y in range(brick.y_low, brick.y_high + 1):
                     self.current_top_z[x][y] = brick.z_high
-                    self.current_top_brick[x][y] = brick.brick_index
+                    self.current_top_brick[x][y] = brick.line_index
 
     def compute_removable_bricks(self):
-        removable_bricks = {brick.brick_index for brick in self.bricks}
+        removable_bricks = {brick.line_index for brick in self.bricks}
         for brick in self.bricks:
             if len(brick.supported_by) == 1:
                 removable_bricks.discard(list(brick.supported_by)[0])
@@ -60,9 +60,9 @@ class SandStack():
 
 
 class Brick():
-    def __init__(self, line, brick_index):
+    def __init__(self, line, line_index):
         self.line = line
-        self.brick_index = brick_index
+        self.line_index = line_index
         self.re_line = [int(num) for num in re.findall('[0-9]+', line)]
         self.x_low = self.re_line[0]
         self.y_low = self.re_line[1]
