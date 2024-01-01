@@ -34,7 +34,7 @@ def create_grid_graph(lines):
         G.add_edge(f'{i},{j}', f'{i},{j + 1}', weight=1)
     # right
     j = len(lines[0]) - 1
-    for j in range(len(lines[0]) - 1):
+    for i in range(len(lines) - 1):
         G.add_edge(f'{i},{j}', f'{i + 1},{j}', weight=1)
 
 
@@ -359,3 +359,4 @@ print('ans', int(ans))
 
 # 630205436807424 to high
 # 630205436807423 also to high
+# 625621833255013 to low
