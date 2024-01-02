@@ -224,7 +224,7 @@ ans += compute_diagonal(max_steps, vertical_len_chunk,
 # 0,1 0,0 n n
 # 1,1 1,0 n n
 # here s denotes the center and n are chunks that are not relevant
-relevant_chunk = dist_b_r
+relevant_chunk = dist_t_r
 leave_center_dist = dist_m_m[f'{len(lines)-1},0'] + 2
 max_dist_in_chunk = max(relevant_chunk.values())
 
@@ -360,3 +360,4 @@ print('ans', int(ans))
 # 630205436807424 to high
 # 630205436807423 also to high
 # 625621833255013 to low
+# 625621836289518 not correct
