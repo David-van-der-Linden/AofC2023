@@ -165,9 +165,11 @@ horizontal_len_chunk = len(lines[0])
 vertical_len_chunk = len(lines)
 
 max_reachable_even = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0) and
+     (relevant_chunk[node] <= max_steps)])
 max_reachable_odd = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
+     (relevant_chunk[node] <= max_steps)])
 
 ans += compute_diagonal(max_steps, vertical_len_chunk,
                         horizontal_len_chunk, leave_center_dist, max_dist_in_chunk)
@@ -187,9 +189,11 @@ horizontal_len_chunk = len(lines[0])
 vertical_len_chunk = len(lines)
 
 max_reachable_even = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0) and
+     (relevant_chunk[node] <= max_steps)])
 max_reachable_odd = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
+     (relevant_chunk[node] <= max_steps)])
 
 ans += compute_diagonal(max_steps, vertical_len_chunk,
                         horizontal_len_chunk, leave_center_dist, max_dist_in_chunk)
@@ -209,9 +213,11 @@ horizontal_len_chunk = len(lines[0])
 vertical_len_chunk = len(lines)
 
 max_reachable_even = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0) and
+     (relevant_chunk[node] <= max_steps)])
 max_reachable_odd = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
+     (relevant_chunk[node] <= max_steps)])
 
 ans += compute_diagonal(max_steps, vertical_len_chunk,
                         horizontal_len_chunk, leave_center_dist, max_dist_in_chunk)
@@ -232,9 +238,11 @@ horizontal_len_chunk = len(lines[0])
 vertical_len_chunk = len(lines)
 
 max_reachable_even = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0) and
+     (relevant_chunk[node] <= max_steps)])
 max_reachable_odd = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
+     (relevant_chunk[node] <= max_steps)])
 
 ans += compute_diagonal(max_steps, vertical_len_chunk,
                         horizontal_len_chunk, leave_center_dist, max_dist_in_chunk)
@@ -283,9 +291,11 @@ horizontal_len_chunk = len(lines[0])
 relevant_len_chunk = horizontal_len_chunk
 
 max_reachable_even = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0) and
+     (relevant_chunk[node] <= max_steps)])
 max_reachable_odd = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
+     (relevant_chunk[node] <= max_steps)])
 
 ans += compute_straight(max_steps, relevant_len_chunk,
                         leave_center_dist, max_dist_in_chunk)
@@ -305,9 +315,11 @@ horizontal_len_chunk = len(lines[0])
 relevant_len_chunk = horizontal_len_chunk
 
 max_reachable_even = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0) and
+     (relevant_chunk[node] <= max_steps)])
 max_reachable_odd = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
+     (relevant_chunk[node] <= max_steps)])
 
 ans += compute_straight(max_steps, relevant_len_chunk,
                         leave_center_dist, max_dist_in_chunk)
@@ -327,9 +339,11 @@ vertical_len_chunk = len(lines)
 relevant_len_chunk = vertical_len_chunk
 
 max_reachable_even = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0) and
+     (relevant_chunk[node] <= max_steps)])
 max_reachable_odd = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
+     (relevant_chunk[node] <= max_steps)])
 
 ans += compute_straight(max_steps, relevant_len_chunk,
                         leave_center_dist, max_dist_in_chunk)
@@ -349,9 +363,11 @@ vertical_len_chunk = len(lines)
 relevant_len_chunk = vertical_len_chunk
 
 max_reachable_even = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 0) and
+     (relevant_chunk[node] <= max_steps)])
 max_reachable_odd = len(
-    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1)])
+    [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
+     (relevant_chunk[node] <= max_steps)])
 
 ans += compute_straight(max_steps, relevant_len_chunk,
                         leave_center_dist, max_dist_in_chunk)
