@@ -1,7 +1,7 @@
 from my_secrets import path
 import re
 
-with open(path + 'test20b.txt') as f:
+with open(path + 'input20.txt') as f:
     lines = f.read().split('\n')
 
 
@@ -53,6 +53,8 @@ class Circuit():
             module_name = task[1]
             received_from = task[2]
 
+            # print(received_from, pulse_strength, '->', module_name)
+
             if pulse_strength == 'low':
                 low_pulses_sent += 1
             elif pulse_strength == 'high':
@@ -69,10 +71,16 @@ class Circuit():
                 if pulse_strength == 'high':
                     pass  # do nothing
                 elif pulse_strength == 'low':
-                    new_pulse_strength = 'high' if module.state == 'on' else 'low'
+                    new_pulse_strength = 'high' if module.state == 'off' else 'low'
+                    # print(module.state == 'on')
+                    # print('new_pulse_strength', new_pulse_strength)
+                    # print('module.module_name', module.module_name)
+                    # print('module.state', module.state)
                     for output in module.outputs:
                         queue.append((new_pulse_strength, output, module_name))
                     module.flip_state()
+                    # print('state was flipped')
+                    # print('module.state', module.state)
                 else:
                     assert False
 
@@ -95,3 +103,4 @@ for _ in range(1000):
     hps += tup[1]
 ans = lps * hps
 print('ans', ans)
+# assert ans == 11687500
