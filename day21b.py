@@ -102,15 +102,15 @@ def compute_diagonal(max_steps, vertical_len_chunk, horizontal_len_chunk, leave_
         # starting_dist = leave_center_dist + chunk_i * vertical_len_chunk + chunk_j * horizontal_len_chunk
         # rewriting yields
         # chunk_j * horizontal_len_chunk =  max_steps - max_dist_in_chunk - 10 - (leave_center_dist + chunk_i * vertical_len_chunk)
-        # chunk_j = (max_steps - max_dist_in_chunk - 10 - (leave_center_dist + chunk_i * vertical_len_chunk) ) // horizontal_len_chunk
+        # chunk_j = (max_steps - max_dist_in_chunk - 10 - (leave_center_dist + chunk_i * vertical_len_chunk)) // horizontal_len_chunk
         # if we ensure that our range starts at an even numbered chunk index
         # then an even number of chunks have been before it
         # so then the number of plots in those chunks before that are
         # (max_reachable_even + max_reachable_odd) * 1/2 number_of_skipped_chunks
         range_start = ((((max_steps - max_dist_in_chunk - 10 - (leave_center_dist +
                        chunk_i * vertical_len_chunk)) // horizontal_len_chunk) // 2) * 2) - 2
-        number_of_skipped_chunks = range_start - 1
-        assert number_of_skipped_chunks % 2 == 1
+        number_of_skipped_chunks = range_start
+        assert number_of_skipped_chunks % 2 == 0
         if number_of_skipped_chunks > 0:
             nr_of_plots += (max_reachable_even + max_reachable_odd) * \
                 1/2 * number_of_skipped_chunks
@@ -127,7 +127,7 @@ def compute_diagonal(max_steps, vertical_len_chunk, horizontal_len_chunk, leave_
                 chunk_i * vertical_len_chunk + \
                 chunk_j * horizontal_len_chunk
             if starting_dist > max_steps + 5:
-                pass  # chunk is unreachable we add nothing
+                break  # chunk is unreachable we add nothing
             elif starting_dist < max_steps - max_dist_in_chunk - 10:
                 # chunk is ez to reach add the maximum
                 # since the max_steps is odd we add the
@@ -223,7 +223,7 @@ ans += compute_diagonal(max_steps, vertical_len_chunk, horizontal_len_chunk, lea
                         max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd)
 
 
-# chunks in top left direction from center
+# chunks in bottom left direction from center
 # lets say that the coordinates are as follows
 #  n   n  n n
 #  n   n  s n
@@ -256,7 +256,7 @@ def compute_straight(max_steps, relevant_len_chunk, leave_center_dist, max_dist_
         starting_dist = leave_center_dist + \
             chunk_i * relevant_len_chunk
         if starting_dist > max_steps + 5:
-            pass  # chunk is unreachable we add nothing
+            break  # chunk is unreachable we add nothing
         elif starting_dist < max_steps - max_dist_in_chunk - 10:
             # chunk is ez to reach add the maximum
             # since the max_steps is odd we add the
@@ -372,8 +372,3 @@ max_reachable_odd = len(
 ans += compute_straight(max_steps, relevant_len_chunk, leave_center_dist,
                         max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd)
 print('ans', int(ans))
-
-# 630205436807424 to high
-# 630205436807423 also to high
-# 625621833255013 to low
-# 625621836289518 not correct
