@@ -91,7 +91,7 @@ for node in dist_m_m:
         ans += 1
 
 
-def compute_diagonal(max_steps, vertical_len_chunk, horizontal_len_chunk, leave_center_dist, max_dist_in_chunk):
+def compute_diagonal(max_steps, vertical_len_chunk, horizontal_len_chunk, leave_center_dist, max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd):
     assert vertical_len_chunk % 2 == 1
     assert horizontal_len_chunk % 2 == 1
     nr_of_plots = 0
@@ -171,8 +171,8 @@ max_reachable_odd = len(
     [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
      (relevant_chunk[node] <= max_steps)])
 
-ans += compute_diagonal(max_steps, vertical_len_chunk,
-                        horizontal_len_chunk, leave_center_dist, max_dist_in_chunk)
+ans += compute_diagonal(max_steps, vertical_len_chunk, horizontal_len_chunk, leave_center_dist,
+                        max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd)
 
 # chunks in top right direction from center
 # lets say that the coordinates are as follows
@@ -195,8 +195,8 @@ max_reachable_odd = len(
     [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
      (relevant_chunk[node] <= max_steps)])
 
-ans += compute_diagonal(max_steps, vertical_len_chunk,
-                        horizontal_len_chunk, leave_center_dist, max_dist_in_chunk)
+ans += compute_diagonal(max_steps, vertical_len_chunk, horizontal_len_chunk, leave_center_dist,
+                        max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd)
 
 # chunks in bottom right direction from center
 # lets say that the coordinates are as follows
@@ -219,8 +219,8 @@ max_reachable_odd = len(
     [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
      (relevant_chunk[node] <= max_steps)])
 
-ans += compute_diagonal(max_steps, vertical_len_chunk,
-                        horizontal_len_chunk, leave_center_dist, max_dist_in_chunk)
+ans += compute_diagonal(max_steps, vertical_len_chunk, horizontal_len_chunk, leave_center_dist,
+                        max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd)
 
 
 # chunks in top left direction from center
@@ -244,11 +244,11 @@ max_reachable_odd = len(
     [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
      (relevant_chunk[node] <= max_steps)])
 
-ans += compute_diagonal(max_steps, vertical_len_chunk,
-                        horizontal_len_chunk, leave_center_dist, max_dist_in_chunk)
+ans += compute_diagonal(max_steps, vertical_len_chunk, horizontal_len_chunk, leave_center_dist,
+                        max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd)
 
 
-def compute_straight(max_steps, relevant_len_chunk, leave_center_dist, max_dist_in_chunk):
+def compute_straight(max_steps, relevant_len_chunk, leave_center_dist, max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd):
     assert relevant_len_chunk % 2 == 1
     nr_of_plots = 0
     # todo start range close to max_steps // relevant_len_chunk
@@ -297,8 +297,8 @@ max_reachable_odd = len(
     [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
      (relevant_chunk[node] <= max_steps)])
 
-ans += compute_straight(max_steps, relevant_len_chunk,
-                        leave_center_dist, max_dist_in_chunk)
+ans += compute_straight(max_steps, relevant_len_chunk, leave_center_dist,
+                        max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd)
 
 # chunks in right direction from center
 # lets say that the coordinates are as follows
@@ -321,8 +321,8 @@ max_reachable_odd = len(
     [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
      (relevant_chunk[node] <= max_steps)])
 
-ans += compute_straight(max_steps, relevant_len_chunk,
-                        leave_center_dist, max_dist_in_chunk)
+ans += compute_straight(max_steps, relevant_len_chunk, leave_center_dist,
+                        max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd)
 
 # chunks in down direction from center
 # lets say that the coordinates are as follows
@@ -345,8 +345,8 @@ max_reachable_odd = len(
     [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
      (relevant_chunk[node] <= max_steps)])
 
-ans += compute_straight(max_steps, relevant_len_chunk,
-                        leave_center_dist, max_dist_in_chunk)
+ans += compute_straight(max_steps, relevant_len_chunk, leave_center_dist,
+                        max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd)
 
 # chunks in upward direction from center
 # lets say that the coordinates are as follows
@@ -369,8 +369,8 @@ max_reachable_odd = len(
     [1 for node in relevant_chunk if (relevant_chunk[node] % 2 == 1) and
      (relevant_chunk[node] <= max_steps)])
 
-ans += compute_straight(max_steps, relevant_len_chunk,
-                        leave_center_dist, max_dist_in_chunk)
+ans += compute_straight(max_steps, relevant_len_chunk, leave_center_dist,
+                        max_dist_in_chunk, relevant_chunk, max_reachable_even, max_reachable_odd)
 print('ans', int(ans))
 
 # 630205436807424 to high
