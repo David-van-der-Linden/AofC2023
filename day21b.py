@@ -96,7 +96,7 @@ def compute_diagonal(max_steps, vertical_len_chunk, horizontal_len_chunk, leave_
     assert horizontal_len_chunk % 2 == 1
     nr_of_plots = 0
     temp_dict = dict()
-    for chunk_i in tqdm(range((max_steps // vertical_len_chunk) + 2)):
+    for chunk_i in tqdm(range((max_steps // vertical_len_chunk) + 5)):
         # consider
         # starting_dist = max_steps - max_dist_in_chunk - 10
         # starting_dist = leave_center_dist + chunk_i * vertical_len_chunk + chunk_j * horizontal_len_chunk
@@ -121,12 +121,12 @@ def compute_diagonal(max_steps, vertical_len_chunk, horizontal_len_chunk, leave_
         # starting_dist = leave_center_dist + chunk_i * vertical_len_chunk + chunk_j * horizontal_len_chunk
         # chunk_j = ((starting_dist - leave_center_dist - chunk_i * vertical_len_chunk) // horizontal_len_chunk) + 1
         range_end = ((max_steps - leave_center_dist - chunk_i *
-                     vertical_len_chunk) // horizontal_len_chunk) + 2
+                     vertical_len_chunk) // horizontal_len_chunk) + 5
         for chunk_j in range(range_start, range_end):
             starting_dist = leave_center_dist + \
                 chunk_i * vertical_len_chunk + \
                 chunk_j * horizontal_len_chunk
-            if starting_dist > max_steps:
+            if starting_dist > max_steps + 5:
                 pass  # chunk is unreachable we add nothing
             elif starting_dist < max_steps - max_dist_in_chunk - 10:
                 # chunk is ez to reach add the maximum
@@ -252,10 +252,10 @@ def compute_straight(max_steps, relevant_len_chunk, leave_center_dist, max_dist_
     assert relevant_len_chunk % 2 == 1
     nr_of_plots = 0
     # todo start range close to max_steps // relevant_len_chunk
-    for chunk_i in tqdm(range((max_steps // relevant_len_chunk) + 2)):
+    for chunk_i in tqdm(range((max_steps // relevant_len_chunk) + 5)):
         starting_dist = leave_center_dist + \
             chunk_i * relevant_len_chunk
-        if starting_dist > max_steps:
+        if starting_dist > max_steps + 5:
             pass  # chunk is unreachable we add nothing
         elif starting_dist < max_steps - max_dist_in_chunk - 10:
             # chunk is ez to reach add the maximum
