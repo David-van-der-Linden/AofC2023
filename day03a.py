@@ -23,7 +23,7 @@ for line_index in range(len(lines)):
                     y_start = max(0, line_index-1)
                     y_end = min(line_index+1, len(lines)-1)
                     for i in range(y_start, y_end+1):
-                        if not lines[i][j] in nums_np:
+                        if lines[i][j] not in nums_np:
                             ans += int(match.group())
                             match_done = True
                             break

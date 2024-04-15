@@ -16,17 +16,18 @@ cap_to_lower = {'A': 'z',
 # add a symbol at the start indicating which hand type it is and then apply a sorting algorithm to it
 
 
-def determine_type(str):
-    # input str is a string of length 5
-    # returns single character string between a and g
-    # where g corresponds to the best hand type and a to the worst hand type
+def determine_type(hand: str) -> str:
+    """Input hand is a string of length 5.\n
+    Returns single character string between a and g,\n
+    where g corresponds to the best hand type and a to the worst hand type.
+    """
 
     # a_val is how often the most occurring character occurs
-    # Counter(str) is dictionary that counts how often a character occurs in a string
-    a_val = max(Counter(str).values())
+    # Counter(hand) is dictionary that counts how often a character occurs in a string
+    a_val = max(Counter(hand).values())
     # b_val is how often the second most occurring character occurs
     if a_val != 5:
-        b_val = sorted(Counter(str).values())[-2]
+        b_val = sorted(Counter(hand).values())[-2]
 
     # logic for determining which hand type we have
     if a_val == 5:

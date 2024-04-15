@@ -4,10 +4,10 @@ with open(path + 'input9.txt') as f:
     lines = f.read().split('\n')
 
 
-def get_diff(line: list):
+def get_diff(split_line: list[int]):
     difference_row = []
-    for value_index in range(1, len(line)):
-        difference_row.append(line[value_index]-line[value_index - 1])
+    for value_index in range(1, len(split_line)):
+        difference_row.append(split_line[value_index]-split_line[value_index - 1])
     return difference_row
 
 # idea carry out the steps like described in the question
@@ -16,9 +16,9 @@ def get_diff(line: list):
 
 ans = 0
 for line in lines:
-    line = [int(val) for val in line.split()]
-    ends = [line[-1]]
-    diff = get_diff(line)
+    split_line = [int(val) for val in line.split()]
+    ends = [split_line[-1]]
+    diff = get_diff(split_line)
     while diff != [0 for _ in range(len(diff))]:
         ends.append(diff[-1])
         diff = get_diff(diff)

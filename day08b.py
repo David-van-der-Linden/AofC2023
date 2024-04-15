@@ -13,7 +13,7 @@ with open(path + input_file) as f:
     lines = f.read().split('\n')
 
 instructions = lines[0]
-map = {}
+mapper = {}
 
 for line_index in range(2, len(lines)):
     line = lines[line_index]
@@ -21,11 +21,11 @@ for line_index in range(2, len(lines)):
     left_location = re.split(', ', re.split(' = ', line)[1])[0][1:]
     right_location = re.split(', ', re.split(' = ', line)[1])[1][:-1]
 
-    map[key] = [left_location, right_location]
+    mapper[key] = [left_location, right_location]
 
 # finding starting locations
 my_locations = []
-for key in map:
+for key in mapper:
     if key[2] == 'A':
         my_locations.append(key)
 
@@ -69,11 +69,11 @@ while flag:
         # go to next
         for location_index in range(len(my_locations)):
             if character == 'L':
-                my_locations[location_index] = map[my_locations[location_index]][0]
+                my_locations[location_index] = mapper[my_locations[location_index]][0]
             elif character == 'R':
-                my_locations[location_index] = map[my_locations[location_index]][1]
+                my_locations[location_index] = mapper[my_locations[location_index]][1]
             else:
-                raise
+                raise AssertionError()
         nr_of_steps += 1
 
 

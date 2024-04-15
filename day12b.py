@@ -63,7 +63,7 @@ def seq_to_min_ssl(seq: tuple):
     return ssl[:-1]
 
 
-def nr_of_ways(ssl: str, seq: tuple):
+def nr_of_ways(ssl: str, seq: tuple) -> int:
     if (ssl, seq) in lookup:
         return lookup[(ssl, seq)]
     elif ssl == '':
@@ -99,11 +99,10 @@ def nr_of_ways(ssl: str, seq: tuple):
                 lookup[(ssl, seq)] = nr_of_ways(ssl[seq[0]+1:], seq[1:])
                 return lookup[(ssl, seq)]
     else:
-        assert False
+        raise AssertionError()
 
 
-global lookup
-lookup = dict()
+lookup = {}
 
 ans = 0
 for line in tqdm(lines):

@@ -1,7 +1,8 @@
 import re
 from my_secrets import path
 
-file = open(path + 'input1.txt')
+with open(path + 'input1.txt') as f:
+    lines = f.read().split('\n')
 
 word_to_num = {'zero': '0',
                'one': '1',
@@ -15,7 +16,7 @@ word_to_num = {'zero': '0',
                'nine': '9'}
 
 ans = 0
-for line in file:
+for line in lines:
     # get first and last word
     first = re.search("[0-9]|zero|one|two|three|four|five|six|seven|eight|nine", line).group()
     last = re.search("[0-9]|orez|eno|owt|eerht|ruof|evif|xis|neves|thgie|enin", line[::-1]).group()

@@ -29,8 +29,10 @@ get_ends = {'|': [[-1, 0], [1, 0]],
 
 
 def get_next(row_l: int, col_l: int, row_c: int, col_c: int, symbol: str):
-    # reruns coordinates of the next symbol along the path
-    # or raises error
+    """Returns coordinates of the next symbol along the path,\n
+    or raises error
+    """
+
     last = np.array([row_l, col_l])
     current = np.array([row_c, col_c])
 
@@ -44,7 +46,7 @@ def get_next(row_l: int, col_l: int, row_c: int, col_c: int, symbol: str):
         out = current + np.array(ends[0])
         return out[0], out[1]
     else:
-        raise 'ends not match current and last'
+        raise Exception('ends not match current and last')
 
 
 # from looking at the puzzle input we deduced that the start node should be a '-'

@@ -1,5 +1,3 @@
-import re
-import numpy as np
 from my_secrets import path
 
 with open(path + 'input2.txt') as f:
@@ -14,9 +12,8 @@ for line_index in range(len(lines)):
                'green': 0,
                'blue': 0}
 
-    def my_def():
-        split_line = line.split(':')[1]
-        draws = split_line.split(';')
+    def my_def(line=line, my_dict=my_dict):
+        draws = line.split(':')[1].split(';')
         for draw in draws:
             split_draw = draw.split(',')
             for ball in split_draw:

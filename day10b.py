@@ -51,8 +51,10 @@ get_ends = {'|': [[-1, 0], [1, 0]],
 
 
 def get_next(row_l: int, col_l: int, row_c: int, col_c: int, symbol: str):
-    # reruns coordinates of the next symbol along the path
-    # or raises error
+    """Returns coordinates of the next symbol along the path,\n
+    or raises error.
+    """
+
     last = np.array([row_l, col_l])
     current = np.array([row_c, col_c])
 
@@ -66,7 +68,7 @@ def get_next(row_l: int, col_l: int, row_c: int, col_c: int, symbol: str):
         out = current + np.array(ends[0])
         return out[0], out[1]
     else:
-        raise 'ends not match current and last'
+        raise Exception('ends not match current and last')
 
 
 # from looking at the puzzle input we deduced that the start node should be a '-'
@@ -116,15 +118,14 @@ def vis_grid(grid: list[list[str]], path: str):
     for row in grid:
         grid_str.append(''.join(row)+'\n')
     grid_str = ''.join(grid_str)
-    f = open(path, 'w')
-    f.write(grid_str)
-    f.close()
+    with open(path, 'w') as f:
+        f.write(grid_str)
 
 
 directions = {(1, 0), (-1, 0), (0, 1), (0, -1)}
 
 
-class board():
+class Board:
     def __init__(self, grid):
         self.grid = grid
 
@@ -135,8 +136,8 @@ class board():
         while len(queue) > 0:
             loc = queue.pop(0)
             self.grid[loc[0]][loc[1]] = symbol
-            for dir in directions:
-                new_loc = (loc[0] + dir[0], loc[1] + dir[1])
+            for direc in directions:
+                new_loc = (loc[0] + direc[0], loc[1] + direc[1])
                 if (0 <= new_loc[0] < len(self.grid[0])) \
                         and (0 <= new_loc[1] < len(self.grid)) \
                         and not visited[new_loc[0]][new_loc[1]] \
@@ -154,7 +155,7 @@ class board():
 
 
 vis_grid(big_grid, path + 'big_grid_pre_color.txt')
-my_object = board(big_grid)
+my_object = Board(big_grid)
 my_object.color_this_and_touching((0, 0), 'O')
 vis_grid(my_object.grid, path + 'big_grid_vised.txt')
 print('ans:', my_object.get_num_odd_sym_in_grid('.'))

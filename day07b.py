@@ -16,13 +16,14 @@ cap_to_lower = {'A': 'z',
 # add a symbol at the start indicating which hand type it is and then apply a sorting algorithm to it
 
 
-def determine_type(str):
-    # input str is a string of length 5
-    # returns single character string between a and g
-    # where g corresponds to the best hand type and a to the worst hand type
+def determine_type(hand: str) -> str:
+    """Input hand is a string of length 5.\n
+    Returns single character string between a and g,\n
+    where g corresponds to the best hand type and a to the worst hand type.
+    """
 
-    # Counter(str) is dictionary that counts how often a character occurs in a string
-    counted = Counter(str)
+    # Counter(hand) is dictionary that counts how often a character occurs in a string
+    counted = Counter(hand)
 
     # how many jokers are there
     if '.' in counted:
@@ -33,10 +34,7 @@ def determine_type(str):
         jokers = 0
 
     # a_val is how often the most occurring character occurs (exuding jokers)
-    if len(counted) > 0:
-        a_val = max(counted.values())
-    else:
-        a_val = 0
+    a_val = max(counted.values()) if len(counted) > 0 else 0
 
     # b_val is how often the second most occurring character occurs (exuding jokers)
     if len(counted) > 1:

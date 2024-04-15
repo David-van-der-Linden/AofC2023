@@ -10,7 +10,7 @@ with open(path + input_file) as f:
     lines = f.read().split('\n')
 
 instructions = lines[0]
-map = {}
+mapper = {}
 
 for line_index in range(2, len(lines)):
     line = lines[line_index]
@@ -18,7 +18,7 @@ for line_index in range(2, len(lines)):
     left_location = re.split(', ', re.split(' = ', line)[1])[0][1:]
     right_location = re.split(', ', re.split(' = ', line)[1])[1][:-1]
 
-    map[key] = [left_location, right_location]
+    mapper[key] = [left_location, right_location]
 
 my_location = 'AAA'
 
@@ -29,11 +29,11 @@ while my_location != 'ZZZ':
         if my_location == 'ZZZ':
             print('we made it')
         if character == 'L':
-            my_location = map[my_location][0]
+            my_location = mapper[my_location][0]
         elif character == 'R':
-            my_location = map[my_location][1]
+            my_location = mapper[my_location][1]
         else:
-            raise
+            raise AssertionError()
 
         nr_of_steps += 1
 
